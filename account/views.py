@@ -8,14 +8,20 @@ from rest_framework import generics, permissions
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.permissions import IsAuthenticated
 
-from account.models import ProfileImage, UserProfile
-from account.serializers import ProfileImageSerializer, UserProfileSerializer
+from account.models import ProfileImage, UserProfile, UserType
+from account.serializers import ProfileImageSerializer, UserProfileSerializer, UserTypeSerializer
 
 
 class ProfileImageViewSet(generics.ListCreateAPIView):
     parser_classes = (JSONParser, MultiPartParser, FormParser,)
     serializer_class = ProfileImageSerializer
     queryset = ProfileImage.objects.all()
+
+
+class UserTypeViewSet(generics.ListCreateAPIView):
+    parser_classes = (JSONParser, MultiPartParser, FormParser,)
+    serializer_class = UserTypeSerializer
+    queryset = UserType.objects.all()
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):

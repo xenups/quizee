@@ -135,7 +135,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('bio', 'user', 'images', 'user_type')
+        fields = ('bio', 'is_activated', 'user', 'images', 'user_type')
 
     def create(self, validated_data):
         userType_data = validated_data.pop('user_type')
