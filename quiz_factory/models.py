@@ -12,18 +12,18 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    question = models.CharField(max_length=400, blank=False)
+    question_context = models.CharField(max_length=400, blank=False)
     is_active = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, null=True, blank=True,
         verbose_name="Category", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.question
+        return self.question_context
 
 
 class QuestionChoices(models.Model):
-    question = models.OneToOneField(Question, primary_key=True, related_name='question', on_delete=True)
+    question_id = models.ForeignKey(Question, related_name='question', on_delete=models.CASCADE)
     is_right_choice = models.BooleanField(default=False)
     choice = models.CharField(max_length=100, blank=False)
 
