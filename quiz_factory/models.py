@@ -23,7 +23,7 @@ class Question(models.Model):
 
 
 class QuestionChoices(models.Model):
-    question_id = models.ForeignKey(Question, related_name='question', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='question', on_delete=models.CASCADE)
     is_right_choice = models.BooleanField(default=False)
     choice = models.CharField(max_length=100, blank=False)
 

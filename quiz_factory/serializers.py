@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from quiz_factory.models import Question, Category
+from quiz_factory.models import Question, Category, QuestionChoices
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -23,3 +23,11 @@ class QuestionSerializer(serializers.ModelSerializer):
     #                                        , is_active=validated_data.pop('is_active'))
     #     question.save()
     #     return question
+
+
+class QuestionChoicesSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer()
+
+    class Meta:
+        model = QuestionChoices
+        fields = ('question', 'is_right_choice', 'choice')
