@@ -3,6 +3,47 @@ from django.shortcuts import render
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django_rest_passwordreset.signals import reset_password_token_created
+from rest_framework.request import Request
+from rest_framework import generics, permissions
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
+from rest_framework.permissions import IsAuthenticated
+
+from account.models import ProfileImage, UserProfile, UserType
+from account.serializers import ProfileImageSerializer, UserProfileSerializer, UserTypeSerializer
+
+
+class ProfileImageViewSet(generics.ListCreateAPIView):
+    parser_classes = (JSONParser, MultiPartParser, FormParser,)
+    serializer_class = ProfileImageSerializer
+    queryset = ProfileImage.objects.all()
+
+
+class UserTypeViewSet(generics.ListCreateAPIView):
+    parser_classes = (JSONParser, MultiPartParser, FormParser,)
+    serializer_class = UserTypeSerializer
+    queryset = UserType.objects.all()
+
+
+class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (JSONParser, MultiPartParser, FormParser,)
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+
+class UserProfileViewSet(generics.ListCreateAPIView):
+    permission_classes = [
+        permissions.AllowAny  # Or anon users can't register
+    ]
+
+    def initialize_request(self, request, *args, **kwargs):
+        if not isinstance(request, Request):
+            request = super().initialize_request(request, *args, **kwargs)
+        return request
+
+    parser_classes = (JSONParser, MultiPartParser, FormParser,)
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
 
 
 @receiver(reset_password_token_created)
