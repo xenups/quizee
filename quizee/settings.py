@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'account.apps.AccountConfig',
+    'quiz_factory.apps.QuizFactoryConfig',
     'django_rest_passwordreset',
 
 ]
